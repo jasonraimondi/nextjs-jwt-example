@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { login } from "../services/login_service";
+import { Links } from "../components/links";
 
 export type LoginInputs = {
   email: string
@@ -28,7 +29,10 @@ function Page() {
   };
 
   return <>
+    <Links/>
+
     {error ? <p>Error: {error}</p> : null}
+
     <form className="container mx-auto max-w-sm" onSubmit={handleSubmit}>
       <div>
         <label htmlFor="email">Email</label>
