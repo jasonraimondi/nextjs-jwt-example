@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { loginToAPI } from "../services/loginToAPI";
+import { login } from "../services/login_service";
 
 export type LoginInputs = {
   email: string
@@ -15,7 +15,7 @@ function Page() {
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
-    const res = await loginToAPI(inputs);
+    const res = await login(inputs);
     if (res) setError(res);
   };
 

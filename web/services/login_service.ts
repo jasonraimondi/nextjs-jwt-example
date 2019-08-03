@@ -1,8 +1,14 @@
 import axios, { AxiosRequestConfig } from "axios";
+import Cookie from "js-cookie";
+import Router from "next/router";
 import { LoginInputs } from "../pages/login";
 import { catchAxiosError } from "./error";
 
-export async function loginToAPI(inputs: LoginInputs): Promise<string | void> {
+export const COOKIES = {
+  authToken: "myApp.authToken"
+};
+
+export async function login(inputs: LoginInputs): Promise<string | void> {
   const data = new URLSearchParams(inputs);
   const config: AxiosRequestConfig = {
     baseURL: "http://localhost:1323",
@@ -14,5 +20,8 @@ export async function loginToAPI(inputs: LoginInputs): Promise<string | void> {
     return "Something went wrong!";
   }
   const { token } = res.data;
-  alert(`token is ${token}`);
+
+  // store the token into cookies
+  Cookie.set(COOKIES.authToken, token);
+  await Router.push("/dashboard");
 }
