@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { loginToAPI } from "../services/loginToAPI";
 
 export type LoginInputs = {
   email: string
@@ -6,13 +7,16 @@ export type LoginInputs = {
 }
 
 function Page() {
-  const initialValues: LoginInputs = { email: "", password: "", };
+  // these values are hardcoded since our main.go api only accepts this auth combo
+  const initialValues: LoginInputs = { email: "rickety_cricket@example.com", password: "shhh!", };
 
   const [inputs, setInputs] = useState(initialValues);
+  const [error, setError] = useState("");
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
-    alert(`TODO add login endpoint! ${JSON.stringify(inputs)}`)
+    const res = await loginToAPI(inputs);
+    if (res) setError(res);
   };
 
   const handleInputChange = (e: React.ChangeEvent<any>) => {
@@ -24,6 +28,7 @@ function Page() {
   };
 
   return <>
+    {error ? <p>Error: {error}</p> : null}
     <form className="container mx-auto max-w-sm" onSubmit={handleSubmit}>
       <div>
         <label htmlFor="email">Email</label>
