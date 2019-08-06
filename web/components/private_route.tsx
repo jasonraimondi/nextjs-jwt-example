@@ -8,43 +8,32 @@ export type AuthProps = {
   auth: AuthToken
 }
 
-type AuthState = {
-  auth: AuthToken
-}
-
 export function privateRoute(WrappedComponent: any) {
-  return class extends Component<AuthProps, AuthState> {
-    state = {
-      auth: new AuthToken(this.props.auth.token),
-    };
-
+  return class extends Component<AuthProps> {
     static async getInitialProps(ctx: any) {
       const token = ServerCookie(ctx)[COOKIES.authToken];
       const auth = new AuthToken(token);
       const initialProps = { auth };
+      if (auth.isExpired) {
+        ctx.res.writeHead(302, {
+          Location: "/login?redirected=true",
+        });
+        ctx.res.end();
+      }
       if (WrappedComponent.getInitialProps) return WrappedComponent.getInitialProps(initialProps);
       return initialProps;
     }
 
-    componentDidMount(): void {
-      if (this.props.auth.decodedToken.exp === 0 || this.state.auth.isExpired) {
-        Router.push("/login");
-      }
-    }
-
-    componentDidUpdate(): void {
-      if (this.props.auth.decodedToken.exp === 0 || this.state.auth.isExpired) {
-        Router.push("/login");
-      }
-    }
-
-    render() {
+    get auth() {
       // the server pass to the client serializes the token
       // so we have to reinitialize the authToken class
       //
       // @see https://github.com/zeit/next.js/issues/3536
-      // const auth =;
-      return <WrappedComponent auth={this.state.auth} {...this.props} />;
+      return new AuthToken(this.props.auth.token);
+    }
+
+    render() {
+      return <WrappedComponent auth={this.auth} {...this.props} />;
     }
   };
 }

@@ -9,7 +9,7 @@ export type LoginInputs = {
 
 function Page() {
   // these values are hardcoded since our main.go api only accepts this auth combo
-  const initialValues: LoginInputs = { email: "rickety_cricket@example.com", password: "shhh!", };
+  const initialValues: LoginInputs = { email: "", password: "", };
 
   const [inputs, setInputs] = useState(initialValues);
   const [error, setError] = useState("");

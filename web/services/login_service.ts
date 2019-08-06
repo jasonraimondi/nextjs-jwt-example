@@ -3,6 +3,7 @@ import Cookie from "js-cookie";
 import Router from "next/router";
 import { LoginInputs } from "../pages/login";
 import { catchAxiosError } from "./error";
+import { post } from "./rest_service";
 
 export const COOKIES = {
   authToken: "myApp.authToken"
@@ -10,10 +11,7 @@ export const COOKIES = {
 
 export async function login(inputs: LoginInputs): Promise<string | void> {
   const data = new URLSearchParams(inputs);
-  const config: AxiosRequestConfig = {
-    baseURL: "http://localhost:1323",
-  };
-  const res: any = await axios.post("/api/login", data, config).catch(catchAxiosError);
+  const res: any = await post("/api/login", data).catch(catchAxiosError);
   if (res.error) {
     return res.error;
   } else if (!res.data || !res.data.token) {
