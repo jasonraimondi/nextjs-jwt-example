@@ -1,6 +1,6 @@
 # Next.js authorization example including private route protection
 
-[Web](./web)
+https://jasonraimondi.com/posts/create-a-secured-rest-api-for-a-next-js-application-using-jwt-and-golang/
 
 
 ```bash
