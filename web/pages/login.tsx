@@ -42,6 +42,10 @@ function Page() {
         <label htmlFor="password">Password</label>
         <input type="password" id="password" name="password" onChange={handleInputChange} value={inputs.password} placeholder="********"/>
       </div>
+      <div>
+        <small><strong>user:</strong> rickety_cricket@example.com</small>
+        <small><strong>password:</strong> shhh!</small>
+      </div>
       <button type="submit">Login</button>
     </form>
   </>;
