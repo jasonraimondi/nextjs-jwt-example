@@ -24,7 +24,7 @@ function Page(props: Props) {
     <Links />
     <p>{props.message}</p>
     {/*<div>{props.auth.authorizationString}</div>*/}
-    {props.auth.isAuthenticated ? "YES" : "NO"}
+    <p>isAuthenticated:{props.auth.isAuthenticated ? "YES" : "NO"}</p>
     <button onClick={logout}>Logout</button>
   </>
 }
