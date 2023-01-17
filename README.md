@@ -1,3 +1,11 @@
+```diff
+!                                                                      
+! WARNING - This is probably not a great reference in 2023 and beyond. 
+!           This example uses a version of Next.js from 2021. A great  
+!           auth library for next-js is https://next-auth.js.org/      
+!                                                                      
+```
+
 # Next.js authorization example including private route protection
 
 https://jasonraimondi.com/posts/create-a-secured-rest-api-for-a-next-js-application-using-jwt-and-golang/
