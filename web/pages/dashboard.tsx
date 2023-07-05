@@ -18,13 +18,20 @@ function Page(props: Props) {
     await Router.push("/login");
   };
 
-  console.log(props.auth);
+  var isAuth = false
+  if (props.auth.constructor.name === "Object") {
+    if (new Date() < new Date(props.auth.decodedToken.exp * 1000)) {
+      isAuth = true
+    }
+  } else {
+    isAuth = props.auth.isAuthenticated;
+  }
 
   return <>
     <Links />
     <p>{props.message}</p>
     {/*<div>{props.auth.authorizationString}</div>*/}
-    <p>isAuthenticated:{props.auth.isAuthenticated ? "YES" : "NO"}</p>
+    <p>isAuthenticated:{isAuth ? "YES" : "NO"}</p>
     <button onClick={logout}>Logout</button>
   </>
 }
